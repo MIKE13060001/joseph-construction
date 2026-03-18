@@ -25,69 +25,26 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        const BlogsPage = ({ onNavigate }) => (
+        const BlogsPage = ({ onNavigate, onBlogClick }) => (
             <div className="bg-white min-h-screen">
                 <Navbar onNavigate={onNavigate} />
                 <div className="max-w-7xl mx-auto px-12 py-24 text-center">
                     <span className="badge-blue text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">Blogs</span>
-                    <h1 className="text-7xl font-bold mb-6 tracking-tight">Insights and Updates</h1>
+                    <h1 className="text-7xl font-bold mb-6 tracking-tight">Nos articles sur vos constructions</h1>
                     <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed mb-10">
-                        Read our latest articles and insights on construction, design trends, and industry innovations.
+                        Découvrez nos dernières actualités, conseils d'experts et inspirations en matière de maçonnerie, piscines et rénovation.
                     </p>
                     <div className="flex items-center justify-center space-x-6">
                         <button className="bg-navy text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center transition hover:opacity-90">
                             <span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>
-                            Contact Us
-                        </button>
-                        <button onClick={() => onNavigate('services')} className="text-sm font-semibold flex items-center hover:underline">
-                            What we do <span className="ml-2">→</span>
+                            Contactez-nous
                         </button>
                     </div>
                 </div>
 
-                <div className="max-w-7xl mx-auto px-12 mb-16">
-                    <div className="relative rounded-[40px] overflow-hidden h-[600px] group cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=1600" className="w-full h-full object-cover transition duration-700 group-hover:scale-105" />
-                        <div className="absolute bottom-10 left-10 bg-white p-10 rounded-[2.5rem] max-w-md shadow-2xl">
-                            <span className="text-[10px] font-bold text-navy uppercase tracking-wider mb-4 block">Residential Construction</span>
-                            <h2 className="text-3xl font-bold mb-6 leading-tight">Building the Future of Residential Spaces</h2>
-                            <div className="flex items-center space-x-4 text-gray-400 text-xs font-medium">
-                                <span className="flex items-center"><i className="far fa-calendar-alt mr-2"></i>Aug 23, 2025</span>
-                                <span>•</span>
-                                <span className="flex items-center"><i className="far fa-clock mr-2"></i>5 min read</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="max-w-7xl mx-auto px-12 grid grid-cols-3 gap-8 mb-8">
-                    {[
-                        { title: 'Shaping the Skyline with Commercial Construction', category: 'Commercial Construction', date: 'Aug 22, 2025', read: '6 min read', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800' },
-                        { title: 'Transforming Spaces with Interior Fit-Out Excellence', category: 'Interior Fit-Out', date: 'Aug 21, 2025', read: '5 min read', img: 'https://images.unsplash.com/photo-1513584684031-434524ca01d1?auto=format&fit=crop&q=80&w=800' },
-                        { title: 'Building Strong Foundations: Infrastructure Development for Modern Cities', category: 'Infrastructure Development', date: 'Aug 20, 2025', read: '3 min read', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800' }
-                    ].map((blog, idx) => (
-                        <div key={idx} className="group cursor-pointer">
-                            <div className="rounded-[2.5rem] overflow-hidden mb-6 h-64">
-                                <img src={blog.img} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
-                            </div>
-                            <span className="text-[10px] font-bold text-navy uppercase tracking-wider mb-3 block">{blog.category}</span>
-                            <h4 className="text-xl font-bold mb-4 leading-tight">{blog.title}</h4>
-                            <div className="flex items-center space-x-4 text-gray-400 text-[10px] font-medium">
-                                <span className="flex items-center"><i className="far fa-calendar-alt mr-2"></i>{blog.date}</span>
-                                <span>•</span>
-                                <span className="flex items-center"><i className="far fa-clock mr-2"></i>{blog.read}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="max-w-7xl mx-auto px-12 grid grid-cols-3 gap-8 pb-24">
-                    {[
-                        { title: 'Renovation & Remodeling: Turning Old Spaces into Modern Masterpieces', category: 'Renovation & Remodeling', date: 'Aug 19, 2025', read: '5 min read', img: 'https://images.unsplash.com/photo-1503387762-592dea58ef23?auto=format&fit=crop&q=80&w=800' },
-                        { title: 'Streamlining Success with Expert Project Management', category: 'Project Management', date: 'Aug 18, 2025', read: '5 min read', img: 'https://images.unsplash.com/photo-1507537297325-5bcc96397371?auto=format&fit=crop&q=80&w=800' },
-                        { title: 'Future-Ready Homes: Innovations in Residential Construction', category: 'Residential Construction', date: 'Aug 17, 2025', read: '7 min read', img: 'https://images.unsplash.com/photo-1513584684031-434524ca01d1?auto=format&fit=crop&q=80&w=800' }
-                    ].map((blog, idx) => (
-                        <div key={idx} className="group cursor-pointer">
+                <div className="max-w-7xl mx-auto px-12 grid grid-cols-1 md:grid-cols-3 gap-8 pb-24">
+                    {blogsData.map((blog, idx) => (
+                        <div key={idx} className="group cursor-pointer" onClick={() => onBlogClick(blog)}>
                             <div className="rounded-[2.5rem] overflow-hidden mb-6 h-64">
                                 <img src={blog.img} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
                             </div>
@@ -239,6 +196,57 @@
             }
         ];
 
+        const blogsData = [
+            {
+                id: 0,
+                title: "Maçonnerie de Gros Œuvre : Les fondations de votre sérénité dans le Var",
+                category: "Maçonnerie de gros oeuvre",
+                date: "Oct 12, 2025",
+                read: "5 min de lecture",
+                img: "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800",
+                content: [
+                    { type: 'p', text: "La réussite de tout projet de construction repose invariablement sur une base solide. Chez Joseph Construction, expert de la maçonnerie de gros œuvre dans le Var, nous avons fait de la solidité structurelle notre signature. Chaque mur érigé, chaque dalle coulée est le fruit de notre héritage familial de deux générations." },
+                    { type: 'h3', text: "L'art de bâtir pour durer" },
+                    { type: 'p', text: "Le gros œuvre constitue le squelette de votre future maison ou de votre résidence haut de gamme. Nous utilisons des matériaux de première qualité, conçus pour résister aux conditions climatiques méditerranéennes. Nos équipes sont formées aux techniques les plus modernes pour garantir non seulement la sécurité, mais aussi l'efficacité énergétique des bâtiments." },
+                    { type: 'h3', text: "L'engagement de Joseph Construction" },
+                    { type: 'p', text: "Nous avons récemment achevé avec succès les fondations de plusieurs villas de luxe sur la Côte d'Azur. Ces projets illustrent notre capacité à gérer des chantiers complexes avec précision. Vous avez un projet en tête ? Ne confiez pas la base de votre rêve à n'importe qui." }
+                ],
+                ctaText: "Prêt à démarrer votre chantier de gros œuvre ?"
+            },
+            {
+                id: 1,
+                title: "Construction et Entretien de Piscine : Votre oasis d'eau cristalline",
+                category: "Piscines",
+                date: "Sep 28, 2025",
+                read: "6 min de lecture",
+                img: "https://images.unsplash.com/photo-1503387762-592dea58ef23?auto=format&fit=crop&q=80&w=800",
+                content: [
+                    { type: 'p', text: "Dans le sud de la France, une villa n'est vraiment complète que si elle est sublimée par une piscine exceptionnelle. Joseph Construction ne se limite pas à bâtir vos murs ; nous concevons et réalisons des espaces aquatiques sur-mesure qui deviendront le point central de vos étés." },
+                    { type: 'h3', text: "De l'esquisse à la première baignade" },
+                    { type: 'p', text: "Piscines à débordement, couloirs de nage ou bassins de détente paysagers, nos réalisations témoignent de notre savoir-faire unique. Nous vous accompagnons de l'étude méticuleuse du terrain au coulage du béton, en passant par l'étanchéité et la pose de revêtements luxueux." },
+                    { type: 'h3', text: "Entretien et pérennité de votre bassin" },
+                    { type: 'p', text: "Notre expertise englobe également la rénovation et l'entretien de vos installations existantes, garantissant une eau claire et des équipements fiables tout au long de l'année. Reposez-vous sur notre professionnalisme pour une parfaite tranquillité d'esprit." }
+                ],
+                ctaText: "Confiez-nous la création de votre espace aquatique de rêve."
+            },
+            {
+                id: 2,
+                title: "Rénovation Immobilière : Redonner vie au patrimoine architectural",
+                category: "Rénovation immobilière",
+                date: "Aoû 05, 2025",
+                read: "4 min de lecture",
+                img: "https://images.unsplash.com/photo-1513584684031-434524ca01d1?auto=format&fit=crop&q=80&w=800",
+                content: [
+                    { type: 'p', text: "La rénovation immobilière dans le sud de la France exige un doigté particulier, combinant le respect des traditions architecturales locales avec vos attentes de confort moderne. Qu'il s'agisse de restaurer une bastide varoise ou de moderniser une villa contemporaine, Joseph Construction est le partenaire idéal de votre transformation." },
+                    { type: 'h3', text: "L'harmonie entre l'ancien et le contemporain" },
+                    { type: 'p', text: "Notre approche consiste à conserver l'âme authentique du bâti d'origine tout en y intégrant des normes écologiques pointues, des isolations performantes et des finitions de très haut niveau. Nous privilégions une communication transparente avec nos clients pour garantir un résultat final qui dépasse de loin les attentes initiales." },
+                    { type: 'h3', text: "Un investissement pérenne" },
+                    { type: 'p', text: "Faire le choix d'une rénovation de qualité avec Joseph Construction, c'est l'assurance d'une valorisation exceptionnelle de votre patrimoine immobilier sur le long terme." }
+                ],
+                ctaText: "Transformons ensemble votre prochain espace de vie."
+            }
+        ];
+
         const servicesData = [
             {
                 title: 'Maçonnerie de gros œuvre',
@@ -353,6 +361,39 @@
                 <div className="max-w-7xl mx-auto px-12 flex justify-between items-center py-12 border-t border-gray-100">
                     <button onClick={onPrev} className="flex items-center text-sm font-bold group text-navy"><div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center mr-3 group-hover:bg-blue-600 transition-colors"><i className="fas fa-arrow-left text-[10px]"></i></div>Précédent</button>
                     <button onClick={onNext} className="flex items-center text-sm font-bold group text-navy">Suivant<div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center ml-3 group-hover:bg-blue-600 transition-colors"><i className="fas fa-arrow-right text-[10px]"></i></div></button>
+                </div>
+                <Footer />
+            </div>
+        );
+
+        const BlogDetail = ({ blog, onBack, onNavigate }) => (
+            <div className="bg-white min-h-screen">
+                <Navbar onNavigate={onNavigate} />
+                <div className="max-w-4xl mx-auto px-12 py-24 text-center">
+                    <button onClick={onBack} className="flex items-center text-sm font-bold group text-navy mb-10"><div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center mr-3 group-hover:bg-blue-600 transition-colors"><i className="fas fa-arrow-left text-[10px]"></i></div>Retour</button>
+                    <span className="badge-blue text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">{blog.category}</span>
+                    <h1 className="text-5xl md:text-6xl font-bold mb-8 text-navy leading-tight">{blog.title}</h1>
+                    <div className="flex items-center justify-center space-x-4 text-gray-500 text-sm font-medium mb-12">
+                        <span className="flex items-center"><i className="far fa-calendar-alt mr-2"></i>{blog.date}</span>
+                        <span>•</span>
+                        <span className="flex items-center"><i className="far fa-clock mr-2"></i>{blog.read}</span>
+                    </div>
+                </div>
+                <div className="max-w-5xl mx-auto px-12 mb-16">
+                    <img src={blog.img} className="w-full h-[500px] object-cover rounded-[40px] shadow-sm" alt={blog.title} />
+                </div>
+                <div className="max-w-4xl mx-auto px-12 pb-24">
+                    <div className="prose prose-lg max-w-none text-gray-600">
+                        {blog.content.map((block, i) => {
+                            if (block.type === 'p') return <p key={i} className="mb-6 leading-relaxed text-left text-sm">{block.text}</p>;
+                            if (block.type === 'h3') return <h3 key={i} className="text-3xl font-bold mb-6 mt-12 text-navy text-left">{block.text}</h3>;
+                            return null;
+                        })}
+                    </div>
+                    <div className="mt-20 p-12 bg-blue-50/50 rounded-3xl text-center">
+                        <h3 className="text-3xl font-bold text-navy mb-6">{blog.ctaText}</h3>
+                        <button onClick={() => { window.location.href='mailto:contact@brixorav2.com'; }} className="bg-navy text-white px-8 py-4 rounded-full text-sm font-bold flex items-center justify-center mx-auto transition hover:opacity-95"><span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>Contactez-nous aujourd'hui</button>
+                    </div>
                 </div>
                 <Footer />
             </div>
@@ -514,20 +555,16 @@
             );
         };
 
-        const BlogsSection = () => (
+        const BlogsSection = ({ onNavigate, onBlogClick }) => (
             <section className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-12 text-center mb-16">
                     <span className="badge-blue text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">Blogs</span>
-                    <h2 className="text-5xl font-bold mb-4">Insights and Updates</h2>
-                    <a href="#" className="text-sm font-semibold hover:underline">View All Blogs →</a>
+                    <h2 className="text-5xl font-bold mb-4">Nos articles sur vos constructions</h2>
+                    <button onClick={() => onNavigate('blogs')} className="text-sm font-semibold hover:underline bg-transparent border-none cursor-pointer">Voir tous nos articles →</button>
                 </div>
-                <div className="max-w-7xl mx-auto px-12 grid grid-cols-3 gap-8">
-                    {[
-                        { title: 'Building the Future of Residential Spaces', category: 'Residential', img: 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800' },
-                        { title: 'Shaping the Skyline with Commercial Construction', category: 'Commercial', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800' },
-                        { title: 'Transforming Spaces with Interior Fit-Out Excellence', category: 'Interior', img: 'https://images.unsplash.com/photo-1513584684031-434524ca01d1?auto=format&fit=crop&q=80&w=800' }
-                    ].map((blog, idx) => (
-                        <div key={idx} className="group cursor-pointer">
+                <div className="max-w-7xl mx-auto px-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {blogsData.map((blog, idx) => (
+                        <div key={idx} className="group cursor-pointer" onClick={() => onBlogClick(blog)}>
                             <div className="rounded-[2.5rem] overflow-hidden mb-6 h-64"><img src={blog.img} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" /></div>
                             <span className="text-[10px] font-bold text-navy uppercase mb-3 block">{blog.category}</span>
                             <h4 className="text-xl font-bold mb-4">{blog.title}</h4>
@@ -579,10 +616,11 @@
         const App = () => {
             const [view, setView] = useState('home');
             const [selectedProject, setSelectedProject] = useState(null);
+            const [selectedBlog, setSelectedBlog] = useState(null);
 
-            useEffect(() => { window.scrollTo(0, 0); }, [view, selectedProject]);
+            useEffect(() => { window.scrollTo(0, 0); }, [view, selectedProject, selectedBlog]);
 
-            const navigate = (v) => { setView(v); setSelectedProject(null); };
+            const navigate = (v) => { setView(v); setSelectedProject(null); setSelectedBlog(null); };
 
             const handleNext = () => {
                 const nextId = (selectedProject.id + 1) % projectsData.length;
@@ -592,6 +630,11 @@
             const handlePrev = () => {
                 const prevId = (selectedProject.id - 1 + projectsData.length) % projectsData.length;
                 setSelectedProject(projectsData[prevId]);
+            };
+
+            const handleBlogClick = (blog) => {
+                setSelectedBlog(blog);
+                setView('blogDetail');
             };
 
             if (view === 'projectDetail' && selectedProject) {
@@ -605,8 +648,11 @@
                     />
                 );
             }
+            if (view === 'blogDetail' && selectedBlog) {
+                return <BlogDetail blog={selectedBlog} onBack={() => setView('blogs')} onNavigate={navigate} />;
+            }
             if (view === 'blogs') {
-                return <BlogsPage onNavigate={navigate} />;
+                return <BlogsPage onNavigate={navigate} onBlogClick={handleBlogClick} />;
             }
             if (view === 'services') {
                 return <ServicesPage onNavigate={navigate} />;
@@ -622,7 +668,7 @@
                     <ProjectsSection onProjectClick={(p) => { setSelectedProject(p); setView('projectDetail'); }} />
                     <WhyUsSection />
                     <TestimonialsSection />
-                    <BlogsSection />
+                    <BlogsSection onNavigate={navigate} onBlogClick={handleBlogClick} />
                     <CTASection />
                     <Footer />
                 </div>
