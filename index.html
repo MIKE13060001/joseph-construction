@@ -574,12 +574,68 @@
             </section>
         );
 
+        const faqsData = [
+            {
+                q: "Quels types de services de construction proposez-vous ?",
+                a: "Nous proposons une gamme complète de services incluant la maçonnerie de gros œuvre, l'agrandissement de maison, la réfection de façade, la couverture, ainsi que la construction et l'entretien de piscines sur-mesure dans tout le Var."
+            },
+            {
+                q: "Quelle est la durée moyenne d'un projet de construction ou de rénovation ?",
+                a: "La durée varie fortement selon la nature et l'ampleur du projet. Une rénovation partielle peut prendre quelques semaines, tandis qu'une construction de villa complète ou un gros œuvre prend généralement de 3 à 6 mois. Nous établissons un planning précis dès le début des travaux."
+            },
+            {
+                q: "Proposez-vous des devis et des consultations gratuites ?",
+                a: "Oui, la première étape de notre collaboration consiste toujours en une étude de votre projet et la réalisation d'un devis détaillé et transparent, sans aucun engagement de votre part."
+            },
+            {
+                q: "Vos travaux sont-ils couverts par une garantie décennale ?",
+                a: "Absolument. En tant qu'entreprise familiale reconnue depuis deux générations, toutes nos réalisations structurelles sont couvertes par une garantie décennale, vous assurant tranquillité d'esprit et sécurité sur le long terme."
+            },
+            {
+                q: "Comment se déroule la coordination avec les différents corps de métier ?",
+                a: "Nous assurons la coordination complète du chantier. Du terrassier au finisseur, nous planifions chaque intervention pour garantir le respect strict des délais et une exécution sans faille."
+            }
+        ];
+
+        const FaqSection = () => {
+            const [openIndex, setOpenIndex] = useState(null);
+            return (
+                <section className="py-24 bg-gray-50 flex justify-center">
+                    <div className="max-w-7xl w-full px-12 grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+                        <div>
+                            <span className="bg-blue-50 text-navy text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">FAQ</span>
+                            <h2 className="text-5xl font-bold mb-4 tracking-tight leading-tight">Tout ce que vous<br/>devez savoir</h2>
+                            <p className="text-gray-500 mb-8 max-w-sm">Obtenez des réponses rapides à vos questions importantes et gagnez du temps avec des explications simples et claires.</p>
+                            <div className="flex items-center space-x-4">
+                                <span className="text-gray-500 text-sm">Encore des questions ?</span>
+                                <button className="bg-navy text-white px-6 py-2.5 rounded-full text-sm font-bold flex items-center hover:bg-opacity-90 transition-colors"><span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>Contactez-nous</button>
+                            </div>
+                        </div>
+                        <div className="space-y-4">
+                            {faqsData.map((faq, idx) => (
+                                <div key={idx} className="bg-white rounded-2xl p-6 shadow-sm cursor-pointer border border-transparent hover:border-gray-100 transition-colors" onClick={() => setOpenIndex(openIndex === idx ? null : idx)}>
+                                    <div className="flex justify-between items-center">
+                                        <h4 className="font-medium text-lg text-gray-900">{faq.q}</h4>
+                                        <div className={`w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center transition-transform ${openIndex === idx ? '' : ''}`}>
+                                            {openIndex === idx ? <i className="fas fa-minus text-xs"></i> : <i className="fas fa-plus text-xs"></i>}
+                                        </div>
+                                    </div>
+                                    {openIndex === idx && <p className="mt-4 text-gray-500 text-sm leading-relaxed">{faq.a}</p>}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
         const CTASection = () => (
             <section className="mx-12 mb-24 relative rounded-[60px] overflow-hidden bg-navy py-32 text-center text-white">
-                <div className="relative z-10 max-w-2xl mx-auto px-6">
-                    <div className="flex items-center justify-center space-x-1 mb-6">{[1, 2, 3, 4, 5].map(i => <i key={i} className="fas fa-star text-white text-[10px]"></i>)}</div>
-                    <h2 className="text-6xl font-bold mb-6 tracking-tight">Build your dream project today with us</h2>
-                    <button className="bg-white text-navy px-8 py-3 rounded-full text-sm font-bold flex items-center mx-auto transition-transform hover:scale-105"><span className="mr-2 w-1.5 h-1.5 bg-navy rounded-full"></span>Contact us</button>
+                <img src="./bg_roofer.jpg" className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay" alt="Charpentier" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/60 to-navy/30"></div>
+                <div className="relative z-10 max-w-4xl mx-auto px-6">
+                    <h2 className="text-6xl font-bold mb-10 tracking-tight">Ensemble, construisons le projet qui vous ressemble</h2>
+                    <button className="bg-white text-navy px-8 py-3 rounded-full text-sm font-bold flex items-center mx-auto transition-transform hover:scale-105 shadow-xl"><span className="mr-2 w-1.5 h-1.5 bg-navy rounded-full"></span>Contactez-nous</button>
                 </div>
             </section>
         );
@@ -587,10 +643,32 @@
         const Footer = () => (
             <footer className="max-w-7xl mx-auto px-12 pb-24">
                 <div className="bg-white rounded-[40px] p-16 border border-gray-50 flex flex-wrap justify-between shadow-sm">
-                    <div className="max-w-xs mb-10"><div className="text-2xl font-extrabold tracking-tight mb-6">Brixora<span className="text-sm align-top">®</span></div><p className="text-gray-500 text-sm">A modern construction template for innovative projects.</p></div>
+                    <div className="max-w-xs mb-10">
+                        <div className="text-2xl font-extrabold tracking-tight mb-6 flex items-center gap-3">
+                            <div className="w-10 h-10 bg-navy text-white rounded flex items-center justify-center text-2xl font-black shadow-md">J</div>
+                            Joseph Construction
+                        </div>
+                        <p className="text-gray-500 text-sm leading-relaxed">Votre entreprise familiale pour des projets qui vous ressemblent.</p>
+                    </div>
                     <div className="flex space-x-20">
-                        <div><h5 className="font-bold text-sm mb-6">Pages</h5><ul className="space-y-4 text-gray-400 text-sm"><li>Home</li><li>About</li><li>Services</li></ul></div>
-                        <div><h5 className="font-bold text-sm mb-6">Follow</h5><ul className="space-y-4 text-gray-400 text-sm"><li>Facebook</li><li>Linkedin</li><li>Twitter</li></ul></div>
+                        <div>
+                            <h5 className="font-bold text-sm mb-6 text-navy">Pages</h5>
+                            <ul className="space-y-4 text-gray-500 font-medium text-sm">
+                                <li className="hover:text-navy cursor-pointer transition-colors">Accueil</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors">Notre histoire</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors">Nos services</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors">Nos réalisations</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors">Blogs</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 className="font-bold text-sm mb-6 text-navy">Nous suivre</h5>
+                            <ul className="space-y-4 text-gray-500 font-medium text-sm">
+                                <li className="hover:text-navy cursor-pointer transition-colors">Facebook</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors">Linkedin</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors">Twitter</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </footer>
@@ -669,6 +747,7 @@
                     <WhyUsSection />
                     <TestimonialsSection />
                     <BlogsSection onNavigate={navigate} onBlogClick={handleBlogClick} />
+                    <FaqSection />
                     <CTASection />
                     <Footer />
                 </div>
