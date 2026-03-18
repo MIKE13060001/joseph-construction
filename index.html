@@ -17,6 +17,14 @@
         .badge-blue { background-color: #eef2ff; color: #4338ca; }
         @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
         .animate-marquee { animation: marquee 35s linear infinite; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
@@ -58,8 +66,8 @@
                         </div>
                     ))}
                 </div>
-                <CTASection />
-                <Footer />
+                <CTASection onNavigate={onNavigate} />
+                <Footer onNavigate={onNavigate} />
             </div>
         );
 
@@ -68,12 +76,13 @@
                 <div className="cursor-pointer" onClick={() => onNavigate('home')}><img src="./joseph_logo.png" alt="Joseph Construction" className="h-[40px]" /></div>
                 <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
                     <a href="#" className="hover:text-navy" onClick={(e) => { e.preventDefault(); onNavigate('home'); }}>Accueil</a>
-                    <a href="#" className="hover:text-navy">Notre histoire</a>
+                    <a href="#" className="hover:text-navy" onClick={(e) => { e.preventDefault(); onNavigate('about'); }}>Notre histoire</a>
                     <a href="#" className="hover:text-navy" onClick={(e) => { e.preventDefault(); onNavigate('services'); }}>Nos services</a>
-                    <a href="#" className="hover:text-navy">Nos réalisations</a>
+                    <a href="#" className="hover:text-navy" onClick={(e) => { e.preventDefault(); onNavigate('projects'); }}>Nos réalisations</a>
                     <a href="#" className="hover:text-navy" onClick={(e) => { e.preventDefault(); onNavigate('blogs'); }}>Blogs</a>
+                    <a href="#" className="hover:text-navy font-bold" onClick={(e) => { e.preventDefault(); onNavigate('contact'); }}>Contact</a>
                 </div>
-                <button className="bg-navy text-white px-6 py-2.5 rounded-full text-sm font-semibold flex items-center">
+                <button onClick={() => onNavigate('contact')} className="bg-navy text-white px-6 py-2.5 rounded-full text-sm font-semibold flex items-center transition hover:opacity-95">
                     <span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>
                     Contact
                 </button>
@@ -296,12 +305,12 @@
                         Des solutions de maçonnerie et de rénovation adaptées à votre vision, vos besoins et votre style.
                     </p>
                     <div className="flex items-center justify-center space-x-6">
-                        <button className="bg-navy text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center transition hover:opacity-90">
+                        <button onClick={() => onNavigate('contact')} className="bg-navy text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center transition hover:opacity-90">
                             <span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>
-                            Contact Us
+                            Contactez-nous
                         </button>
-                        <button onClick={() => onNavigate('home')} className="text-sm font-semibold flex items-center hover:underline">
-                            View projects <span className="ml-2">→</span>
+                        <button onClick={() => onNavigate('projects')} className="text-sm font-semibold flex items-center hover:underline">
+                            Voir toutes nos réalisations <span className="ml-2">→</span>
                         </button>
                     </div>
                 </div>
@@ -310,8 +319,8 @@
                         <ServiceCard key={idx} {...service} reverse={idx % 2 !== 0} />
                     ))}
                 </div>
-                <CTASection />
-                <Footer />
+                <CTASection onNavigate={onNavigate} />
+                <Footer onNavigate={onNavigate} />
             </div>
         );
 
@@ -362,7 +371,7 @@
                     <button onClick={onPrev} className="flex items-center text-sm font-bold group text-navy"><div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center mr-3 group-hover:bg-blue-600 transition-colors"><i className="fas fa-arrow-left text-[10px]"></i></div>Précédent</button>
                     <button onClick={onNext} className="flex items-center text-sm font-bold group text-navy">Suivant<div className="w-10 h-10 rounded-full bg-navy text-white flex items-center justify-center ml-3 group-hover:bg-blue-600 transition-colors"><i className="fas fa-arrow-right text-[10px]"></i></div></button>
                 </div>
-                <Footer />
+                <Footer onNavigate={onNavigate} />
             </div>
         );
 
@@ -392,14 +401,14 @@
                     </div>
                     <div className="mt-20 p-12 bg-blue-50/50 rounded-3xl text-center">
                         <h3 className="text-3xl font-bold text-navy mb-6">{blog.ctaText}</h3>
-                        <button onClick={() => { window.location.href='mailto:contact@brixorav2.com'; }} className="bg-navy text-white px-8 py-4 rounded-full text-sm font-bold flex items-center justify-center mx-auto transition hover:opacity-95"><span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>Contactez-nous aujourd'hui</button>
+                        <button onClick={() => onNavigate('contact')} className="bg-navy text-white px-8 py-4 rounded-full text-sm font-bold flex items-center justify-center mx-auto transition hover:opacity-95"><span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>Parlons de votre projet</button>
                     </div>
                 </div>
-                <Footer />
+                <Footer onNavigate={onNavigate} />
             </div>
         );
 
-        const Hero = () => (
+        const Hero = ({ onNavigate }) => (
             <section className="max-w-7xl mx-auto px-12 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                     <div className="flex items-center space-x-1 mb-4">
@@ -409,8 +418,8 @@
                     <h1 className="text-6xl font-bold leading-[1.1] mb-6 tracking-tight">Votre entreprise de construction<br />de père en fils</h1>
                     <p className="text-gray-500 text-lg mb-8 max-w-md leading-relaxed">Nous construisons et rénovons votre maison à votre façon</p>
                     <div className="flex items-center space-x-6 mb-12">
-                        <button className="bg-navy text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center transition hover:opacity-90"><span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>Contact</button>
-                        <button className="text-sm font-semibold flex items-center hover:underline">Nos réalisations <span className="ml-2">→</span></button>
+                        <button onClick={() => onNavigate('contact')} className="bg-navy text-white px-8 py-3 rounded-full text-sm font-semibold flex items-center transition hover:opacity-90"><span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>Contactez-nous</button>
+                        <button onClick={() => onNavigate('projects')} className="text-sm font-semibold flex items-center hover:underline">Nos réalisations <span className="ml-2">→</span></button>
                     </div>
                     <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-50 inline-flex items-center space-x-4 max-w-xs">
                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="Sarah Dubosc" className="w-20 h-20 rounded-xl object-cover" />
@@ -473,7 +482,7 @@
         );
 
         const ProjectsSection = ({ onProjectClick }) => (
-            <section className="py-24 bg-white">
+            <section id="projects" className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-12 text-center mb-16">
                     <span className="badge-blue text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">Les projets de Joseph Construction</span>
                     <h2 className="text-5xl font-bold mb-4">Quelques unes de nos réalisations</h2>
@@ -513,10 +522,45 @@
                             </li>
                         ))}
                     </ul>
-                    <button className="bg-navy text-white px-8 py-3 rounded-full text-sm font-bold flex items-center transition hover:opacity-90"><span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>Contactez-nous</button>
                 </div>
             </section>
         );
+
+        const StorySection = ({ onNavigate }) => {
+            const [isVisible, setIsVisible] = useState(false);
+            const domRef = React.useRef();
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(entries => {
+                    if (entries[0].isIntersecting) setIsVisible(true);
+                }, { threshold: 0.2 });
+                const currentRef = domRef.current;
+                if (currentRef) observer.observe(currentRef);
+                return () => { if (currentRef) observer.unobserve(currentRef); };
+            }, []);
+
+            return (
+                <section ref={domRef} className="py-24 bg-white flex justify-center overflow-hidden">
+                    <div className={`max-w-7xl w-full px-12 grid grid-cols-1 md:grid-cols-2 gap-16 items-center transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}>
+                        <div>
+                            <span className="badge-blue text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">Notre histoire</span>
+                            <h2 className="text-5xl font-bold mb-6 tracking-tight leading-tight">Une passion transmise de père en fils</h2>
+                            <p className="text-gray-500 mb-6 text-sm leading-relaxed">
+                                La maçonnerie fait partie de ma vie depuis toujours. Très jeune, j’ai appris le métier aux côtés de mon père, Sébastien Canu, qui m’a transmis son savoir-faire, son exigence du travail bien fait et surtout les vraies valeurs du métier d’artisan.
+                            </p>
+                            <button onClick={() => onNavigate('about')} className="bg-navy text-white px-8 py-3 rounded-full text-sm font-bold flex items-center transition-transform hover:scale-105 shadow-xl">
+                                <span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>
+                                Découvrir toute notre histoire
+                            </button>
+                        </div>
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-navy rounded-3xl transform translate-x-4 translate-y-4 opacity-10"></div>
+                            <img src="./about_story.jpg" className="relative z-10 w-full rounded-3xl object-cover shadow-lg h-96" alt="Travail de maçonnerie" />
+                        </div>
+                    </div>
+                </section>
+            );
+        };
 
         const TestimonialsSection = () => {
             const testimonials = [
@@ -629,24 +673,23 @@
             );
         };
 
-        const CTASection = () => (
+        const CTASection = ({ onNavigate }) => (
             <section className="mx-12 mb-24 relative rounded-[60px] overflow-hidden bg-navy py-32 text-center text-white">
                 <img src="./bg_roofer.jpg" className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay" alt="Charpentier" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/60 to-navy/30"></div>
                 <div className="relative z-10 max-w-4xl mx-auto px-6">
                     <h2 className="text-6xl font-bold mb-10 tracking-tight">Ensemble, construisons le projet qui vous ressemble</h2>
-                    <button className="bg-white text-navy px-8 py-3 rounded-full text-sm font-bold flex items-center mx-auto transition-transform hover:scale-105 shadow-xl"><span className="mr-2 w-1.5 h-1.5 bg-navy rounded-full"></span>Contactez-nous</button>
+                    <button onClick={() => onNavigate('contact')} className="bg-white text-navy px-8 py-3 rounded-full text-sm font-bold flex items-center mx-auto transition-transform hover:scale-105 shadow-xl"><span className="mr-2 w-1.5 h-1.5 bg-navy rounded-full"></span>Contactez-nous</button>
                 </div>
             </section>
         );
 
-        const Footer = () => (
+        const Footer = ({ onNavigate }) => (
             <footer className="max-w-7xl mx-auto px-12 pb-24">
                 <div className="bg-white rounded-[40px] p-16 border border-gray-50 flex flex-wrap justify-between shadow-sm">
                     <div className="max-w-xs mb-10">
-                        <div className="text-2xl font-extrabold tracking-tight mb-6 flex items-center gap-3">
-                            <div className="w-10 h-10 bg-navy text-white rounded flex items-center justify-center text-2xl font-black shadow-md">J</div>
-                            Joseph Construction
+                        <div className="mb-6 cursor-pointer" onClick={() => onNavigate('home')}>
+                            <img src="./joseph_logo.png" alt="Joseph Construction" className="h-[40px]" />
                         </div>
                         <p className="text-gray-500 text-sm leading-relaxed">Votre entreprise familiale pour des projets qui vous ressemblent.</p>
                     </div>
@@ -654,11 +697,11 @@
                         <div>
                             <h5 className="font-bold text-sm mb-6 text-navy">Pages</h5>
                             <ul className="space-y-4 text-gray-500 font-medium text-sm">
-                                <li className="hover:text-navy cursor-pointer transition-colors">Accueil</li>
-                                <li className="hover:text-navy cursor-pointer transition-colors">Notre histoire</li>
-                                <li className="hover:text-navy cursor-pointer transition-colors">Nos services</li>
-                                <li className="hover:text-navy cursor-pointer transition-colors">Nos réalisations</li>
-                                <li className="hover:text-navy cursor-pointer transition-colors">Blogs</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors" onClick={() => onNavigate('home')}>Accueil</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors" onClick={() => onNavigate('about')}>Notre histoire</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors" onClick={() => onNavigate('services')}>Nos services</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors" onClick={() => onNavigate('projects')}>Nos réalisations</li>
+                                <li className="hover:text-navy cursor-pointer transition-colors" onClick={() => onNavigate('blogs')}>Blogs</li>
                             </ul>
                         </div>
                         <div>
@@ -691,6 +734,170 @@
             );
         };
 
+        const AboutPage = ({ onNavigate }) => {
+            const paragraphs = [
+                "La maçonnerie fait partie de ma vie depuis toujours. Très jeune, j’ai appris le métier aux côtés de mon père, Sébastien Canu, qui m’a transmis son savoir-faire, son exigence du travail bien fait et surtout les vraies valeurs du métier d’artisan. C’est avec lui que j’ai compris qu’un bon chantier, ce n’est pas juste poser des briques, c’est aussi respecter le client, son projet et son temps.",
+                "À 36 ans, j’ai décidé de me mettre à mon compte et de créer Construction Joseph. Depuis, je n’ai jamais cessé d’évoluer, de découvrir de nouvelles techniques et de relever des projets toujours différents. Rénovation, maçonnerie générale, façades, toitures… chaque chantier a ses particularités, et c’est ce qui rend ce métier passionnant.",
+                "Ce que j’aime par-dessus tout, c’est voir un projet prendre forme, partir d’une idée et devenir concret. J’ai la chance de travailler avec des partenaires de confiance — architectes, plombiers, terrassiers, élagueurs — pour répondre à chaque besoin et accompagner mes clients du début à la fin.",
+                "Pour moi, un chantier réussi, c’est un client satisfait qui voit son projet se réaliser comme il l’imaginait. C’est ce qui me motive chaque jour à continuer, avec la même passion et le même plaisir qu’au premier jour."
+            ];
+
+            return (
+                <div className="bg-white min-h-screen">
+                    <Navbar onNavigate={onNavigate} />
+                    
+                    {/* Hero Section */}
+                    <section className="relative pt-32 pb-24 mx-12 rounded-[60px] overflow-hidden bg-navy text-white text-center mb-16">
+                        <img src="./about_story.jpg" className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay" alt="Travailleurs sur toit" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-navy to-transparent"></div>
+                        <div className="relative z-10 max-w-4xl mx-auto px-6">
+                            <span className="bg-white/20 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block backdrop-blur-sm">Construction Joseph</span>
+                            <h1 className="text-7xl font-bold mb-6 tracking-tight">Notre histoire</h1>
+                            <p className="text-xl opacity-80 max-w-2xl mx-auto font-light">Une passion pour le bâtiment ancrée dans les valeurs familiales et l'amour du travail bien fait.</p>
+                        </div>
+                    </section>
+
+                    {/* Story Content */}
+                    <section className="py-12 max-w-4xl mx-auto px-12">
+                        <div className="space-y-8 text-lg text-gray-700 leading-relaxed font-medium mb-16">
+                            {paragraphs.map((text, idx) => (
+                                <p key={idx} className="animate-fade-in-up" style={{ animationDelay: `${idx * 150}ms` }}>{text}</p>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Silhouette Image */}
+                    <section className="pb-24 max-w-5xl mx-auto px-12">
+                        <img src="./sunset_silhouette.jpg" className="w-full rounded-[3rem] shadow-2xl animate-fade-in-up" alt="Ouvriers au coucher du soleil" style={{ animationDelay: '600ms' }} />
+                    </section>
+
+                    {/* Trust Section */}
+                    <section className="py-24 bg-gray-50 mt-16 flex justify-center mb-16">
+                        <div className="max-w-6xl w-full px-12 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                            <div>
+                                <h2 className="text-4xl font-bold mb-6 tracking-tight text-navy">Pourquoi pouvez-vous nous faire confiance ?</h2>
+                                <div className="space-y-6 text-sm text-gray-600 leading-relaxed">
+                                    <div className="flex items-start">
+                                        <div className="mt-1 w-6 h-6 rounded-full bg-blue-50 flex flex-shrink-0 items-center justify-center mr-4">
+                                            <i className="fas fa-check text-blue-500 text-[10px]"></i>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 mb-1">Certification RGE Qualibat</h4>
+                                            <p>Reconnu Garant de l'Environnement, un label certifiant la qualité de nos travaux de rénovation énergétique et vous permettant de bénéficier d'aides financières de l'État pour vos projets d'amélioration (MaPrimeRénov', éco-PTZ).</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start">
+                                        <div className="mt-1 w-6 h-6 rounded-full bg-blue-50 flex flex-shrink-0 items-center justify-center mr-4">
+                                            <i className="fas fa-check text-blue-500 text-[10px]"></i>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 mb-1">2 Générations d'Expérience</h4>
+                                            <p>Le savoir-faire authentique de la maçonnerie qui s'est perfectionné au fil des années, alliant techniques traditionnelles et matériaux modernes pour un résultat robuste et soigné.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start">
+                                        <div className="mt-1 w-6 h-6 rounded-full bg-blue-50 flex flex-shrink-0 items-center justify-center mr-4">
+                                            <i className="fas fa-check text-blue-500 text-[10px]"></i>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 mb-1">Assurance Décennale</h4>
+                                            <p>Votre sérénité est notre priorité. L'ensemble de nos travaux de gros œuvre sont couverts par une garantie décennale, vous protégeant pendant 10 ans après la réception du chantier.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex justify-center md:justify-end">
+                                <img src="./rge_logo_new.png" alt="Certification RGE Qualibat" className="w-64 drop-shadow-xl hover:scale-105 transition-transform duration-500" />
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <CTASection onNavigate={onNavigate} />
+                    <Footer onNavigate={onNavigate} />
+                </div>
+            );
+        };
+
+        const ContactPage = ({ onNavigate }) => (
+            <div className="bg-white min-h-screen">
+                <Navbar onNavigate={onNavigate} />
+                <div className="max-w-7xl mx-auto px-12 py-24">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
+                        <div className="animate-fade-in-up">
+                            <span className="badge-blue text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6 inline-block">Contactez Joseph Construction</span>
+                            <h1 className="text-7xl font-bold mb-8 tracking-tight text-navy leading-tight">Parlons de votre prochain projet</h1>
+                            <p className="text-gray-500 text-lg leading-relaxed mb-12">
+                                Que vous ayez une idée précise ou que vous ayez besoin de conseils d'experts pour démarrer, notre équipe est à votre écoute.
+                            </p>
+                            
+                            <div className="space-y-10">
+                                <div className="flex items-start">
+                                    <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mr-6 flex-shrink-0">
+                                        <i className="fas fa-phone-alt text-navy"></i>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-navy text-lg mb-1">Téléphone</h4>
+                                        <p className="text-gray-500 font-medium">+33 6 01 02 03 04</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start">
+                                    <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mr-6 flex-shrink-0">
+                                        <i className="fas fa-envelope text-navy"></i>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-navy text-lg mb-1">Email</h4>
+                                        <p className="text-gray-500 font-medium">contact@joseph-construction.fr</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start">
+                                    <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mr-6 flex-shrink-0">
+                                        <i className="fas fa-map-marker-alt text-navy"></i>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-navy text-lg mb-1">Localisation</h4>
+                                        <p className="text-gray-500 font-medium">Secteur Var & PACA, France</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-gray-50/50 rounded-[3rem] p-12 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-widest text-navy mb-3">Nom complet</label>
+                                        <input type="text" placeholder="Votre nom" className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:border-navy transition-colors shadow-sm" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-widest text-navy mb-3">Email</label>
+                                        <input type="email" placeholder="votre@email.com" className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:border-navy transition-colors shadow-sm" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold uppercase tracking-widest text-navy mb-3">Sujet du projet</label>
+                                    <select className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:border-navy transition-colors shadow-sm appearance-none">
+                                        <option>Gros œuvre & Construction</option>
+                                        <option>Piscines & Aménagements</option>
+                                        <option>Rénovation Totale</option>
+                                        <option>Autres services</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold uppercase tracking-widest text-navy mb-3">Votre message</label>
+                                    <textarea rows="5" placeholder="Parlez-nous de votre projet..." className="w-full bg-white border border-gray-100 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:border-navy transition-colors shadow-sm resize-none"></textarea>
+                                </div>
+                                <button className="w-full bg-navy text-white py-5 rounded-[2rem] font-bold text-sm flex items-center justify-center transition hover:opacity-95 shadow-lg">
+                                    <span className="mr-2 w-1.5 h-1.5 bg-white rounded-full"></span>
+                                    Envoyer le message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <Footer onNavigate={onNavigate} />
+            </div>
+        );
+
         const App = () => {
             const [view, setView] = useState('home');
             const [selectedProject, setSelectedProject] = useState(null);
@@ -698,7 +905,21 @@
 
             useEffect(() => { window.scrollTo(0, 0); }, [view, selectedProject, selectedBlog]);
 
-            const navigate = (v) => { setView(v); setSelectedProject(null); setSelectedBlog(null); };
+            const navigate = (v) => { 
+                if (v === 'projects') {
+                    if (view !== 'home') {
+                        setView('home');
+                        setTimeout(() => {
+                            document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                        }, 100);
+                    } else {
+                        document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    setSelectedProject(null); setSelectedBlog(null);
+                    return;
+                }
+                setView(v); setSelectedProject(null); setSelectedBlog(null); 
+            };
 
             const handleNext = () => {
                 const nextId = (selectedProject.id + 1) % projectsData.length;
@@ -735,21 +956,28 @@
             if (view === 'services') {
                 return <ServicesPage onNavigate={navigate} />;
             }
+            if (view === 'about') {
+                return <AboutPage onNavigate={navigate} />;
+            }
+            if (view === 'contact') {
+                return <ContactPage onNavigate={navigate} />;
+            }
 
             return (
                 <div className="min-h-screen bg-white">
                     <Navbar onNavigate={navigate} />
-                    <Hero />
+                    <Hero onNavigate={navigate} />
                     <AboutSection />
                     <MarqueeSection />
                     <ServicesSection />
                     <ProjectsSection onProjectClick={(p) => { setSelectedProject(p); setView('projectDetail'); }} />
                     <WhyUsSection />
+                    <StorySection onNavigate={navigate} />
                     <TestimonialsSection />
                     <BlogsSection onNavigate={navigate} onBlogClick={handleBlogClick} />
                     <FaqSection />
-                    <CTASection />
-                    <Footer />
+                    <CTASection onNavigate={navigate} />
+                    <Footer onNavigate={navigate} />
                 </div>
             );
         };
